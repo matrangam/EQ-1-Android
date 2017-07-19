@@ -8,6 +8,8 @@ import android.Manifest;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -25,7 +27,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private int REQUEST_CODE_LOCATION_PERMISSION = 123;
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationClient;
-//    private Button mGetEarthquakesButton = (Button) findViewById(R.id.btn_get_earthquakes);
+    private Button mGetEarthquakesButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        mGetEarthquakesButton = (Button) findViewById(R.id.btn_get_earthquakes);
+        mGetEarthquakesButton.setOnClickListener(mButtonClickListener);
     }
+
+    private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Log.d("", "");
+        }
+    };
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

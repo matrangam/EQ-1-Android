@@ -9,7 +9,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
-
 public class EarthquakeDataProvider {
     String URL = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
 
@@ -28,7 +27,6 @@ public class EarthquakeDataProvider {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // TODO Auto-generated method stub
-
             }
         }
     );
