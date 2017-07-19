@@ -46,6 +46,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         @Override
         public void onClick(View view) {
             Log.d("", "");
+            EarthquakeDataProvider dp = new EarthquakeDataProvider();
+            AppController.getInstance().addToRequestQueue(dp.getRequest());
         }
     };
 

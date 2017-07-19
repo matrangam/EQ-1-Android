@@ -9,14 +9,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
-public class EarthquakeDataProvider {
-    String URL = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
+class EarthquakeDataProvider {
+    private final String URL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
 
-    public JsonObjectRequest getRequest() {
+    JsonObjectRequest getRequest() {
         return jsObjRequest;
     }
 
-    private JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
+    private final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
         new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -27,6 +27,7 @@ public class EarthquakeDataProvider {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // TODO Auto-generated method stub
+                Log.d("", error.toString());
             }
         }
     );
