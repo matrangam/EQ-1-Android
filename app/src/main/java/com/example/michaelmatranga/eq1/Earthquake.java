@@ -2,21 +2,25 @@ package com.example.michaelmatranga.eq1;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.math.BigInteger;
+
 class EarthquakeProperties {
 
     @SerializedName("properties")
-    public Earthquake properties;
+    private Earthquake properties;
 
     public class Earthquake {
         @SerializedName("detail")
-        public String mDetail;
-        public Double mLatitude;
-        public Double mLongitude;
+        private String mDetail;
+        private Double mLatitude;
+        private Double mLongitude;
         @SerializedName("time")
-        public Double mTimeInSeconds;
+        private BigInteger mTimeInSeconds;
         @SerializedName("mag")
-        public Double mMagnitude;
+        private Double mMagnitude;
         @SerializedName("place")
-        public String mPlace;
+        private String mPlace;
+        @SerializedName("title")
+        private String title;
     }
 }
