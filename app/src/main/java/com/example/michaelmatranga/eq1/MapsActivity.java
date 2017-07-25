@@ -1,5 +1,6 @@
 package com.example.michaelmatranga.eq1;
 
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -8,6 +9,7 @@ import android.Manifest;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -63,7 +65,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 @Override
                 public void onFailure(@NonNull Call<EarthquakeList> call, @NonNull Throwable t) {
-
+                    AlertDialog alertDialog = new AlertDialog.Builder(MapsActivity.this).create();
+                    alertDialog.setTitle("Network Error");
+                    alertDialog.setMessage("Looks like there was an error, please try again.");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    alertDialog.show();
                 }
             });
         }
