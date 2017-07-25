@@ -46,8 +46,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         @Override
         public void onClick(View view) {
             Log.d("", "");
-            EarthquakeDataProvider dp = new EarthquakeDataProvider();
-            AppController.getInstance().addToRequestQueue(dp.getRequest());
+            EarthquakeService service = new EarthquakeService();
+            service.getAll();
         }
     };
 
@@ -61,14 +61,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION);
         } else {
-            mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+
+            mFusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
                     // Got last known location. In some rare situations this can be null.
                     if (location != null) {
-                        LatLng sydney = new LatLng(location.getLatitude(), location.getLongitude());
-                        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+                        LatLng lastLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                        mMap.addMarker(new MarkerOptions().position(lastLocation).title("Your Location"));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(lastLocation));
                     }
                 }
             });
