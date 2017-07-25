@@ -1,16 +1,20 @@
-package com.example.michaelmatranga.eq1;
+package com.example.michaelmatranga.eq1.models;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.math.BigInteger;
 import java.util.List;
 
-class EarthquakeProperties {
+public class EarthquakeProperties {
 
     @SerializedName("properties")
-    private Earthquake properties;
+    private Earthquake mProperties;
 
-    class Earthquake {
+    public Earthquake getProperties() {
+        return mProperties;
+    }
+
+    public class Earthquake {
         @SerializedName("detail")
         private String mDetail;
 
@@ -26,21 +30,24 @@ class EarthquakeProperties {
         @SerializedName("title")
         private String mTitle;
 
+        public String getTitle() {
+            return mTitle;
+        }
     }
 
     @SerializedName("geometry")
     private Geometry mGeometry;
 
     class Geometry {
-        @SerializedName("mCoordinates")
+        @SerializedName("coordinates")
         private List<Double> mCoordinates;
     }
 
     public Double getLatitude() {
-        return mGeometry.mCoordinates.get(0);
+        return mGeometry.mCoordinates.get(1);
     }
 
     public Double getLongitude() {
-        return mGeometry.mCoordinates.get(1);
+        return mGeometry.mCoordinates.get(0);
     }
 }

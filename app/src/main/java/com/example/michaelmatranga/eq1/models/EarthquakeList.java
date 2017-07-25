@@ -1,4 +1,4 @@
-package com.example.michaelmatranga.eq1;
+package com.example.michaelmatranga.eq1.models;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -9,4 +9,7 @@ public class EarthquakeList {
     @SerializedName("features")
     List<EarthquakeProperties> earthquakeList;
 
+    public List<EarthquakeProperties> getEarthquakeList() {
+        return earthquakeList;
+    }
 }

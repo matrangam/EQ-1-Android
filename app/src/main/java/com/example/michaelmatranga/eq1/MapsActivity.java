@@ -2,6 +2,7 @@ package com.example.michaelmatranga.eq1;
 
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.Manifest;
 
@@ -12,6 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.michaelmatranga.eq1.models.EarthquakeList;
+import com.example.michaelmatranga.eq1.models.EarthquakeProperties;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -22,12 +25,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private int REQUEST_CODE_LOCATION_PERMISSION = 123;
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationClient;
-    private Button mGetEarthquakesButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +44,32 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        mGetEarthquakesButton = (Button) findViewById(R.id.btn_get_earthquakes);
-        mGetEarthquakesButton.setOnClickListener(mButtonClickListener);
+        Button getEarthquakesButton = findViewById(R.id.btn_get_earthquakes);
+        getEarthquakesButton.setOnClickListener(mButtonClickListener);
     }
 
     private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Log.d("", "");
-            EarthquakeService service = new EarthquakeService();
-            service.getAll();
+            EarthquakeService service = EarthquakeService.getInstance();
+            service.earthquakeGetter.getAll().enqueue(new Callback<EarthquakeList>() {
+                @Override
+                public void onResponse(@NonNull Call<EarthquakeList> call, @NonNull Response<EarthquakeList> response) {
+                    for (EarthquakeProperties e : response.body().getEarthquakeList()) {
+                        EarthquakeProperties.Earthquake quake = e.getProperties();
+                        mMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(e.getLatitude(), e.getLongitude()))
+                            .title(quake.getTitle())
+                        );
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<EarthquakeList> call, @NonNull Throwable t) {
+
+                }
+            });
         }
     };
 
