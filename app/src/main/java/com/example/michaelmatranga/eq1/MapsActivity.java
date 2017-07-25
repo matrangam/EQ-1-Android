@@ -9,12 +9,11 @@ import android.Manifest;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.michaelmatranga.eq1.models.EarthquakeList;
-import com.example.michaelmatranga.eq1.models.EarthquakeProperties;
+import com.example.michaelmatranga.eq1.models.Earthquake;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -51,16 +50,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Log.d("", "");
-            EarthquakeService service = EarthquakeService.getInstance();
-            service.earthquakeGetter.getAll().enqueue(new Callback<EarthquakeList>() {
+            EarthquakeService.getInstance().earthquakeGetter.getAll().enqueue(new Callback<EarthquakeList>() {
                 @Override
                 public void onResponse(@NonNull Call<EarthquakeList> call, @NonNull Response<EarthquakeList> response) {
-                    for (EarthquakeProperties e : response.body().getEarthquakeList()) {
-                        EarthquakeProperties.Earthquake quake = e.getProperties();
+                    for (Earthquake earthquake : response.body().getEarthquakeList()) {
                         mMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(e.getLatitude(), e.getLongitude()))
-                            .title(quake.getTitle())
+                            .position(earthquake.getPosition())
+                            .title(earthquake.getTitle())
                         );
                     }
                 }

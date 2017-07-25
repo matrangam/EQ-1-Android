@@ -7,9 +7,9 @@ import java.util.List;
 public class EarthquakeList {
 
     @SerializedName("features")
-    List<EarthquakeProperties> earthquakeList;
+    List<Earthquake> earthquakeList;
 
-    public List<EarthquakeProperties> getEarthquakeList() {
+    public List<Earthquake> getEarthquakeList() {
         return earthquakeList;
     }
 }
